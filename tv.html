@@ -1,0 +1,160 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Tic Tac Toe</title>
+
+  <link rel="stylesheet" href="http://cdn.foundation5.zurb.com/foundation.css">
+  <style>
+  .tv-container {
+    height: 100vh;
+  }
+  .top-half, .bot-half {
+    height: 50vh;
+  }
+
+  .board .columns, .board .column {
+    background: #ccc;
+    border: solid black 8px;
+    padding: 8%;
+    /*font-size: 7.5rem;*/
+    text-align: center;
+  }
+
+  .board .column:first-child, .board .columns:first-child{
+    border-left: none;
+  }
+
+  .board .column:last-child, .board .columns:last-child{
+    border-right: none;
+  }
+
+  .board .row:first-child .column, .board .row:first-child .columns{
+    border-top: none;
+  }
+
+  .board .row:last-child, .board .columns{
+    border-bottom: none;
+  }
+
+  @media screen and (max-width: 63.9375em) {
+    .board .columns{
+      min-height: 33vw;
+    }
+    .board {
+      margin-top: calc(((100vh - 100vw) / 2) - 2.75rem);
+    }
+  }
+  </style>
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+
+  <div class="tv-container">
+    <div class="row top-half">
+      <div class="top-left-col small-6 columns">
+        Kansas State University Web Development Club
+      </div>
+      <div class="top-right-col small-6 columns">
+        <div class="board">
+           <div class="row">
+             <div class="small-4 columns square" data-id="0">O</div>
+             <div class="small-4 columns square" data-id="1">X</div>
+             <div class="small-4 columns square" data-id="2">O</div>
+           </div>
+           <div class="row">
+             <div class="small-4 columns square" data-id="3">O</div>
+             <div class="small-4 columns square" data-id="4">X</div>
+             <div class="small-4 columns square" data-id="5">O</div>
+           </div>
+           <div class="row">
+             <div class="small-4 columns square" data-id="6">X</div>
+             <div class="small-4 columns square" data-id="7">X</div>
+             <div class="small-4 columns square" data-id="8">O</div>
+           </div>
+         </div>
+      </div>
+    </div>
+    <div class="row bot-half">
+      <div class="bot-left-col small-6 columns">
+        <div class="board">
+           <div class="row">
+             <div class="small-4 columns square" data-id="0">O</div>
+             <div class="small-4 columns square" data-id="1">X</div>
+             <div class="small-4 columns square" data-id="2">O</div>
+           </div>
+           <div class="row">
+             <div class="small-4 columns square" data-id="3">O</div>
+             <div class="small-4 columns square" data-id="4">X</div>
+             <div class="small-4 columns square" data-id="5">O</div>
+           </div>
+           <div class="row">
+             <div class="small-4 columns square" data-id="6">X</div>
+             <div class="small-4 columns square" data-id="7">X</div>
+             <div class="small-4 columns square" data-id="8">O</div>
+           </div>
+         </div>
+      </div>
+      <div class="bot-right-col small-6 columns">
+        <div class="board">
+           <div class="row">
+             <div class="small-4 columns square" data-id="0">O</div>
+             <div class="small-4 columns square" data-id="1">X</div>
+             <div class="small-4 columns square" data-id="2">O</div>
+           </div>
+           <div class="row">
+             <div class="small-4 columns square" data-id="3">O</div>
+             <div class="small-4 columns square" data-id="4">X</div>
+             <div class="small-4 columns square" data-id="5">O</div>
+           </div>
+           <div class="row">
+             <div class="small-4 columns square" data-id="6">X</div>
+             <div class="small-4 columns square" data-id="7">X</div>
+             <div class="small-4 columns square" data-id="8">O</div>
+           </div>
+         </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
+  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+  <script>
+
+
+
+    // var socket = io('http://localhost:8080');
+    //
+    // socket.on('position', function(msg){
+    //   // update ui with position
+    // });
+    //
+    // socket.on('start_game', function(msg){
+    //   // show game board and init everything (listeners)
+    //   console.log("Got start game msg");
+    //   console.log(msg);
+    // });
+    //
+    // socket.emit('client_hello', function(){
+    //
+    // });
+    //
+    // var $boxes = $('.square');
+    //
+    // function set(index, contents){
+    //   $($boxes[index]).text(contents);
+    // }
+    //
+    // $boxes.click(function(e){
+    //   var id = $(e.target).data('id');
+    //   socket.emit('play', { squareId: id });
+    // });
+  </script>
+</body>
+</html>
