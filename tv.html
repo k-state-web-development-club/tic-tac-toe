@@ -16,9 +16,12 @@
   }
 
   table {
-    margin: 0 auto;
+    margin: 10px auto;
   }
 
+  .game-info {
+    margin-top: 12vh;
+  }
   .square{
     width:100px;
     height:100px;
@@ -48,7 +51,10 @@
         Kansas State University Web Development Club
       </div>
       <div class="top-right-col small-6 columns">
-        <div id="board-1">
+        <div id="game-info-1" class="game-info small-3 columns">
+          <h4 class="text-center">Game 1</h4>
+        </div>
+        <div id="board-1" class="small-9 columns">
           <table>
             <tr id="row1">
               <td class="square"></td>
@@ -71,6 +77,9 @@
     </div>
     <div class="bot-half">
       <div class="bot-left-col small-6 columns">
+        <div id="game-info-2" class="game-info small-3 columns">
+          <h4 class="text-center">Game 2</h4>
+        </div>
         <div id="board-2">
           <table>
             <tr id="row1">
@@ -92,7 +101,10 @@
         </div>
       </div>
       <div class="bot-right-col small-6 columns">
-        <div id="board-3">
+        <div id="game-info-3" class="game-info small-3 columns">
+          <h4 class="text-center">Game 3</h4>
+        </div>
+        <div id="board-3" class="small-9 columns">
           <table>
             <tr id="row1">
               <td class="square"></td>
@@ -118,8 +130,6 @@
   <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
   <script>
-
-
 
     // var socket = io('http://localhost:8080');
     //
