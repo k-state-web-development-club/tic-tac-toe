@@ -22,16 +22,23 @@
   .game-info {
     margin-top: 12vh;
   }
+
+  .club-info {
+    margin-top: 12vh;
+  }
+
+  #powercat-img {
+    height: 20vh;
+  }
+
   .square{
     width:100px;
     height:100px;
   }
-
   .v{
       border-left:1px solid #000;
       border-right:1px solid #000;
   }
-
   .h{
       border-top:1px solid #000;
       border-bottom:1px solid #000;
@@ -48,7 +55,11 @@
   <div class="tv-container">
     <div class="top-half">
       <div class="top-left-col small-6 columns">
-        Kansas State University Web Development Club
+        <div class="club-info text-center">
+          <img id="powercat-img" src="assets/images/powercat.png" />
+          <span>Web Development Club</span><br><br><br>
+          <span>Sign up for the next Tic-Tac-Toe game at <strong>localhost:8080</strong></span>
+        </div>
       </div>
       <div class="top-right-col small-6 columns">
         <div id="game-info-1" class="game-info small-3 columns">
