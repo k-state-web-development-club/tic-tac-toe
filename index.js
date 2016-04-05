@@ -29,6 +29,38 @@ var startGame = function(){
   db.join(gid);
   io.to(gid).emit('start_game', { asdf: 'hi'});
   console.log('Start Game');
+  // create a board object
+  // Create eventlistening for the incoming connections from p1 and p2
+  // We recieved a message from the play channel
+  // Handle on disconnect
+  var board = new Board();
+  p1.on('play', function(msg){
+    var id = msg.squareId;
+    var p1Symbol = "X";
+    if(p1Turn) {
+      if (board.isValid(id)) {
+        board.makeMove(id, p1Symbol);
+      }
+    }
+  });
+  p2.on('play', function(){
+    var id = msg.squareId;
+    var p2Symbol = "O";
+    if(!p1Turn){
+      if (board.isValid(id)){
+        board.makeMove(id, p2Symbol);
+      }
+    }
+  });
+  p1.on('disconnect', function(){
+      console.log("disconnected");
+      p2.emit('disconnect');
+  });
+  p2.on('disconnect', function(){
+    console.log("disconnected");
+    p1.emit('disconnect');
+  });
+  //
 }
 
 io.on('connection', function(socket) {
