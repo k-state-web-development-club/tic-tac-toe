@@ -1,0 +1,174 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Tic Tac Toe</title>
+
+  <link rel="stylesheet" href="http://cdn.foundation5.zurb.com/foundation.css">
+  <style>
+  .tv-container {
+    height: 100vh;
+  }
+  .top-half, .bot-half {
+    height: 50vh;
+  }
+
+  table {
+    margin: 10px auto;
+  }
+
+  .game-info {
+    margin-top: 12vh;
+  }
+
+  .club-info {
+    margin-top: 10vh;
+  }
+
+  #powercat-img {
+    height: 20vh;
+  }
+
+  .square{
+    width:100px;
+    height:100px;
+  }
+  .v{
+      border-left:1px solid #000;
+      border-right:1px solid #000;
+  }
+  .h{
+      border-top:1px solid #000;
+      border-bottom:1px solid #000;
+  }
+  </style>
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+
+  <div class="tv-container">
+    <div class="top-half">
+      <div class="top-left-col small-6 columns">
+        <div class="club-info text-center">
+          <img id="powercat-img" src="assets/images/powercat.png" />
+          <span>Web Development Club</span><br><br>
+          <span>Every Monday 6-7:30PM</span><br><br>
+          <span>Sign up for the next Tic-Tac-Toe game at <strong>localhost:8080</strong></span>
+        </div>
+      </div>
+      <div class="top-right-col small-6 columns">
+        <div id="game-info-1" class="game-info small-3 columns">
+          <h4 class="text-center">Game 1</h4>
+        </div>
+        <div id="board-1" class="small-9 columns">
+          <table>
+            <tr id="row1">
+              <td class="square"></td>
+              <td class="square v"></td>
+              <td class="square"></td>
+            </tr>
+            <tr id="row2">
+              <td class="square h"></td>
+              <td class="square v h"></td>
+              <td class="square h"></td>
+            </tr>
+            <tr id="row3">
+              <td class="square"></td>
+              <td class="square v"></td>
+              <td class="square"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="bot-half">
+      <div class="bot-left-col small-6 columns">
+        <div id="game-info-2" class="game-info small-3 columns">
+          <h4 class="text-center">Game 2</h4>
+        </div>
+        <div id="board-2">
+          <table>
+            <tr id="row1">
+              <td class="square"></td>
+              <td class="square v"></td>
+              <td class="square"></td>
+            </tr>
+            <tr id="row2">
+              <td class="square h"></td>
+              <td class="square v h"></td>
+              <td class="square h"></td>
+            </tr>
+            <tr id="row3">
+              <td class="square"></td>
+              <td class="square v"></td>
+              <td class="square"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="bot-right-col small-6 columns">
+        <div id="game-info-3" class="game-info small-3 columns">
+          <h4 class="text-center">Game 3</h4>
+        </div>
+        <div id="board-3" class="small-9 columns">
+          <table>
+            <tr id="row1">
+              <td class="square"></td>
+              <td class="square v"></td>
+              <td class="square"></td>
+            </tr>
+            <tr id="row2">
+              <td class="square h"></td>
+              <td class="square v h"></td>
+              <td class="square h"></td>
+            </tr>
+            <tr id="row3">
+              <td class="square"></td>
+              <td class="square v"></td>
+              <td class="square"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
+  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+  <script>
+
+    // var socket = io('http://localhost:8080');
+    //
+    // socket.on('position', function(msg){
+    //   // update ui with position
+    // });
+    //
+    // socket.on('start_game', function(msg){
+    //   // show game board and init everything (listeners)
+    //   console.log("Got start game msg");
+    //   console.log(msg);
+    // });
+    //
+    // socket.emit('client_hello', function(){
+    //
+    // });
+    //
+    // var $boxes = $('.square');
+    //
+    // function set(index, contents){
+    //   $($boxes[index]).text(contents);
+    // }
+    //
+    // $boxes.click(function(e){
+    //   var id = $(e.target).data('id');
+    //   socket.emit('play', { squareId: id });
+    // });
+  </script>
+</body>
+</html>

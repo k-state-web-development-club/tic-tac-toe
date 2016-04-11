@@ -33,6 +33,7 @@ var startGame = function(){
   // Create eventlistening for the incoming connections from p1 and p2
   // We recieved a message from the play channel
   // Handle on disconnect
+
   var p1Turn = true;
   var board = new Board();
   p1.on('play', function(msg){
@@ -41,6 +42,7 @@ var startGame = function(){
     if(p1Turn) {
       if (board.isValid(id)) {
         board.makeMove(id, p1Symbol);
+
         p1Turn = false;
       }
     }
@@ -51,6 +53,7 @@ var startGame = function(){
     if(!p1Turn){
       if (board.isValid(id)){
         board.makeMove(id, p2Symbol);
+
         p1Turn = true;
       }
     }
