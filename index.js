@@ -39,23 +39,33 @@ var startGame = function(){
   p1.on('play', function(msg){
     var id = msg.squareId;
     var p1Symbol = "X";
-    if(p1Turn) {
-      if (board.isValid(id)) {
-        board.makeMove(id, p1Symbol);
+    if(p1Turn && board.isValid(id)) {
+      board.makeMove(id, p1Symbol);
 
-        p1Turn = false;
+      var win = board.checkWin();
+      if(win == p1Symbol){
+        p1.emit('you_win');
+        p2.emit('you_lose');
       }
+
+
+      p1Turn = false;
     }
   });
   p2.on('play', function(){
     var id = msg.squareId;
     var p2Symbol = "O";
-    if(!p1Turn){
-      if (board.isValid(id)){
-        board.makeMove(id, p2Symbol);
+    if(!p1Turn && board.isValid(id)){
+      board.makeMove(id, p2Symbol);
 
-        p1Turn = true;
+      var win = board.checkWin();
+      if(win == p2Symbol){
+        p2.emit('you_win');
+        p1.emit('you_lose');
       }
+
+      p1Turn = true;
+      
     }
   });
   p1.on('disconnect', function(){
