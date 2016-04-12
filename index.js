@@ -27,6 +27,7 @@ var startGame = function(){
   p1.join(gid);
   p2.join(gid);
   db.join(gid);
+
   io.to(gid).emit('start_game', { asdf: 'hi'});
   console.log('Start Game');
   // create a board object
@@ -34,34 +35,48 @@ var startGame = function(){
   // We recieved a message from the play channel
   // Handle on disconnect
 
+
+  p1.symbol = "X";
+  p2.symbol = "O";
+
+
   var p1Turn = true;
   var board = new Board();
+
   p1.on('play', function(msg){
+    var current = p1;
+    var other = p2;
+
     var id = msg.squareId;
-    var p1Symbol = "X";
+    var p1Symbol = current.symbol;
     if(p1Turn && board.isValid(id)) {
       board.makeMove(id, p1Symbol);
 
       var win = board.checkWin();
       if(win == p1Symbol){
-        p1.emit('you_win');
-        p2.emit('you_lose');
+        current.emit('you_win', 'asdfasdfasdf');
+        process.nextTick(function(){ other.emit('you_lose'); });
+        console.log("p1 wins");
       }
 
 
       p1Turn = false;
     }
   });
-  p2.on('play', function(){
+
+  p2.on('play', function(msg){
+    var current = p2;
+    var other = p1;
+
     var id = msg.squareId;
-    var p2Symbol = "O";
+    var p2Symbol = current.symbol;
     if(!p1Turn && board.isValid(id)){
       board.makeMove(id, p2Symbol);
 
       var win = board.checkWin();
       if(win == p2Symbol){
-        p2.emit('you_win');
-        p1.emit('you_lose');
+        process.nextTick(function(){ current.emit('you_win'); });
+        process.nextTick(function(){ other.emit('you_lose'); });
       }
 
       p1Turn = true;
@@ -69,8 +84,8 @@ var startGame = function(){
     }
   });
   p1.on('disconnect', function(){
-      console.log("disconnected");
-      p2.emit('disconnect');
+    console.log("disconnected");
+    p2.emit('disconnect');
   });
   p2.on('disconnect', function(){
     console.log("disconnected");
@@ -104,9 +119,6 @@ io.on('connection', function(socket) {
       socket.emit('position');
     }
 
-    socket.on('play', function(data) {
-      console.log(uid + " " + data.squareId);
-    });
   });
 
 

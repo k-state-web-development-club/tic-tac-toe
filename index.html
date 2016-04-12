@@ -91,6 +91,8 @@
       console.log(msg);
     });
 
+    socket.on('you_win', function(){ console.log('you win!'); });
+
     socket.emit('client_hello', function(){
       
     });

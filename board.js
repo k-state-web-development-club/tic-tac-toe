@@ -8,6 +8,7 @@ Board.prototype.isValid = function(space){
 
 Board.prototype.makeMove = function(space, symbol){
   this.board[space] = symbol;
+  console.log(space, symbol);
 }
 Board.prototype.checkWin = function(){
   //Iterate through each 3 consecutive spaces
