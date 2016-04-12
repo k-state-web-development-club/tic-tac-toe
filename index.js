@@ -53,7 +53,6 @@ var startGame = function(){
     if(!p1Turn){
       if (board.isValid(id)){
         board.makeMove(id, p2Symbol);
-
         p1Turn = true;
       }
     }
@@ -98,6 +97,5 @@ io.on('connection', function(socket) {
       console.log(uid + " " + data.squareId);
     });
   });
-
 
 });

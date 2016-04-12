@@ -105,6 +105,11 @@
       var id = $(e.target).data('id');
       socket.emit('play', { squareId: id });
     });
+    io.on("move", function(msg){
+      var square_id = msg.squareId;
+      var character = msg.character;
+      set(square_id, character);
+    })
   </script>
 </body>
 </html>
