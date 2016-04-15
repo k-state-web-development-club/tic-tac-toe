@@ -48,6 +48,12 @@
       top: 0;
       left: 0;
     }
+
+    h2{
+      font-size: 4rem;
+      text-align: center;
+      display: block;
+    }
   </style>
 
   <!--[if lt IE 9]>
@@ -59,27 +65,29 @@
 
   <h1 id="title">Tic-Tac-Toe</h1>
 
+  <h2></h2>
+
   <div class="board">
     <div class="row">
-      <div class="small-4 columns square" data-id="0"></div>
-      <div class="small-4 columns square" data-id="1"></div>
-      <div class="small-4 columns square" data-id="2"></div>
+      <div class="small-4 columns square" data-id="0">-</div>
+      <div class="small-4 columns square" data-id="1">-</div>
+      <div class="small-4 columns square" data-id="2">-</div>
     </div>
     <div class="row">
-      <div class="small-4 columns square" data-id="3"></div>
-      <div class="small-4 columns square" data-id="4"></div>
-      <div class="small-4 columns square" data-id="5"></div>
+      <div class="small-4 columns square" data-id="3">-</div>
+      <div class="small-4 columns square" data-id="4">-</div>
+      <div class="small-4 columns square" data-id="5">-</div>
     </div>
     <div class="row">
-      <div class="small-4 columns square" data-id="6"></div>
-      <div class="small-4 columns square" data-id="7"></div>
-      <div class="small-4 columns square" data-id="8"></div>
+      <div class="small-4 columns square" data-id="6">-</div>
+      <div class="small-4 columns square" data-id="7">-</div>
+      <div class="small-4 columns square" data-id="8">-</div>
     </div>
   </div>
   <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
   <script>
-    var socket = io('http://localhost:8080');
+    var socket = io();
 
     socket.on('position', function(msg){
       // update ui with position
@@ -106,6 +114,23 @@
     $boxes.click(function(e){
       var id = $(e.target).data('id');
       socket.emit('play', { squareId: id });
+    });
+
+    socket.on('game_board', function(msg){
+      $('h2').text(msg);
+    });
+
+    socket.on('move_made', function(msg){
+      set(msg.squareId, msg.symbol);
+      console.log('MOVE PLAYED');
+    });
+
+    socket.on('you_win', function(){
+     $('body').css('background', 'green');
+    });
+
+    socket.on('you_lose', function(){
+     $('body').css('background', 'red');
     });
   </script>
 </body>

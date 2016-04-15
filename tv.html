@@ -34,6 +34,8 @@
   .square{
     width:100px;
     height:100px;
+    text-align: center;
+    font-weight: bold;
   }
   .v{
       border-left:1px solid #000;
@@ -56,7 +58,7 @@
     <div class="top-half">
       <div class="top-left-col small-6 columns">
         <div class="club-info text-center">
-          <img id="powercat-img" src="assets/images/powercat.png" />
+          <img id="powercat-img" src="/images/powercat.png" />
           <span>Web Development Club</span><br><br>
           <span>Every Monday 6-7:30PM</span><br><br>
           <span>Sign up for the next Tic-Tac-Toe game at <strong>localhost:8080</strong></span>
@@ -143,34 +145,43 @@
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
   <script>
 
-    var socket = io('http://localhost:8080');
+    boardInstance('board-1', 1);
+    boardInstance('board-2', 2);
+    boardInstance('board-3', 3);
 
-    socket.emit('display_hello');
+    function boardInstance(board, id){
+      var socket = io();
 
-    // socket.on('position', function(msg){
-    //   // update ui with position
-    // });
-    //
-    // socket.on('start_game', function(msg){
-    //   // show game board and init everything (listeners)
-    //   console.log("Got start game msg");
-    //   console.log(msg);
-    // });
-    //
+      $boxes = $('#' + board).find('.square');
+
+      socket.emit('display_hello', id);
+
+      socket.on('start_game', function(){
+        $.each($boxes, function(index, value){
+          set(index, '');
+        });
+      });
+
+      function set(index, contents){
+        $($boxes[index]).text(contents);
+      }
+
+      socket.on('move_made', function(msg){
+        set(msg.squareId, msg.symbol);
+        console.log('MOVE PLAYED');
+      });
+    }
+
+
+
+    
     // socket.emit('client_hello', function(){
     //
     // });
     //
     // var $boxes = $('.square');
     //
-    // function set(index, contents){
-    //   $($boxes[index]).text(contents);
-    // }
     //
-    // $boxes.click(function(e){
-    //   var id = $(e.target).data('id');
-    //   socket.emit('play', { squareId: id });
-    // });
   </script>
 </body>
 </html>

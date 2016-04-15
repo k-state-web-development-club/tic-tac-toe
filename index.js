@@ -1,13 +1,20 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var Board = require('./board.js');
 
-server.listen(8080);
+server.listen(3001);
 
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
+
+app.get('/tv', function (req, res) {
+  res.sendFile(__dirname + '/tv.html');
+});
+
+app.use(express.static('assets'));
 
 var player_num = 0;
 var game_num = 0;
@@ -27,6 +34,18 @@ var startGame = function(){
   p1.join(gid);
   p2.join(gid);
   db.join(gid);
+  io.to(gid).emit('game_board', db.boardId);
+
+
+  var handleDisconnect = function(){
+    console.log("Game " + gid + " has been disconnected");
+    io.to(gid).emit('disconnected', ':(');
+  }
+
+  p1.on('disconnect', handleDisconnect);
+  p2.on('disconnect', handleDisconnect);
+  db.on('disconnect', handleDisconnect);
+
 
   io.to(gid).emit('start_game', { asdf: 'hi'});
   console.log('Start Game');
@@ -38,51 +57,38 @@ var startGame = function(){
 
   p1.symbol = "X";
   p2.symbol = "O";
+  p1.turn = true;
+  p2.turn = false;
 
-
-  var p1Turn = true;
+  var turn = true;
   var board = new Board();
 
-  p1.on('play', function(msg){
-    var current = p1;
-    var other = p2;
+  function genHandler(current, other){
+    return function(msg){
+      var id = msg.squareId;
+      var symbol = current.symbol;
+      if(turn === current.turn && board.isValid(id)) {
+        board.makeMove(id, symbol);
+        io.to(gid).emit('move_made', {squareId: id, symbol: symbol});
 
-    var id = msg.squareId;
-    var p1Symbol = current.symbol;
-    if(p1Turn && board.isValid(id)) {
-      board.makeMove(id, p1Symbol);
+        var win = board.checkWin();
+        if(win === symbol){
+          current.emit('you_win', 'asdfasdfasdf');
+          other.emit('you_lose');
+          console.log('player ' + symbol + ' won!');
+        }
 
-      var win = board.checkWin();
-      if(win == p1Symbol){
-        current.emit('you_win', 'asdfasdfasdf');
-        process.nextTick(function(){ other.emit('you_lose'); });
-        console.log("p1 wins");
+        turn = !turn;
       }
-
-
-      p1Turn = false;
     }
-  });
+  }
 
-  p2.on('play', function(msg){
-    var current = p2;
-    var other = p1;
 
-    var id = msg.squareId;
-    var p2Symbol = current.symbol;
-    if(!p1Turn && board.isValid(id)){
-      board.makeMove(id, p2Symbol);
 
-      var win = board.checkWin();
-      if(win == p2Symbol){
-        process.nextTick(function(){ current.emit('you_win'); });
-        process.nextTick(function(){ other.emit('you_lose'); });
-      }
+  p1.on('play', genHandler(p1, p2));
+  p2.on('play', genHandler(p2, p1));
 
-      p1Turn = true;
-      
-    }
-  });
+
   p1.on('disconnect', function(){
     console.log("disconnected");
     p2.emit('disconnect');
@@ -96,7 +102,8 @@ var startGame = function(){
 
 io.on('connection', function(socket) {
 
-  socket.on('display_hello', function(){
+  socket.on('display_hello', function(msg){
+    socket.boardId = msg;
     freeDisplayBoards.push(socket);
 
     if(canStartGame()){
