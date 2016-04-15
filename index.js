@@ -6,7 +6,7 @@ var Board = require('./board.js');
 server.listen(8080);
 
 app.get('/', function (req, res) {
-  res.sendFile('/home/k/kmdice/tic-tac-toe' + '/index.html');
+  res.sendFile(__dirname + '/index.html');
 });
 
 var player_num = 0;
